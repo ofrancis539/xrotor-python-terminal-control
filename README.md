@@ -6,7 +6,7 @@ There are two main modes here: Velocity Sweeps or RPM Sweeps
 # Velocity Sweeps:
 Run a series of velocities at a single rpm to determine Ct and Cp at each velocity/advance ratio
 
-Files Required-
+## Files Required-
 * newPropXROTOR.py
 * initializeDataCSV_Vel_Sweep.py
 * runXROTOR_Case_Vel_Sweep.py
@@ -93,7 +93,7 @@ Files Required-
 # RPM Sweeps:
 Run a series of RPMs at a single advance ratio (.001 for hover) to determine Ct and Cp at each RPM
 
-Files Required-
+## Files Required-
 * newPropXROTOR.py
 * initializeDataCSV_RPM_Sweep.py
 * runXROTOR_Case_RPM_Sweep.py
@@ -165,6 +165,7 @@ Files Required-
   #Advance ratio to run at (.001 for hover)
   
   adv_ratio_J
+  
 4. Change all the inputs in getDataXROTOR_RPM_Sweep.py and run
   
   #Name of the propeller (same as step 1)
