@@ -46,7 +46,7 @@ Steps-
   
   radStationData
   
-3. Change all the inputs in initializeDataCSV_Vel_Sweep.py and run
+2. Change all the inputs in initializeDataCSV_Vel_Sweep.py and run
   
   #Name of the propeller (same as step 1)
   
@@ -56,7 +56,7 @@ Steps-
   
   csv_file_path
   
-4. Change all the inputs in runXROTOR_Case_Vel_Sweep.py and run
+3. Change all the inputs in runXROTOR_Case_Vel_Sweep.py and run
 
   #Path to the XROTOR executable (same as step 1)
 
@@ -74,7 +74,7 @@ Steps-
   
   rpm
   
-6. Change all the inputs in getDataXROTOR_Vel_Sweep.py and run
+4. Change all the inputs in getDataXROTOR_Vel_Sweep.py and run
 
   #Name of the propeller (same as step 1)
   
@@ -101,42 +101,80 @@ Files Required-
 
 Steps-
 1. Change all the inputs in newPropXROTOR.py and run
+
   #Path to the XROTOR executable
+  
   xrotor_executable
+  
   #Name of the propeller
+  
   name
+  
   #Number of blades
+  
   numBlades
+  
   #Velocity to create the propeller (1 is suggested)
+  
   velo [meters/second]
+  
   #Tip radius
+  
   tipRadius [meters]
+  
   #Hub radius
+  
   hubRadius [meters]
+  
   #Number of radial stations in the geometry data
+  
   numRadialStations
+  
   #All of the radial station data in format """ r/R   c/R   beta """  
+  
   radStationData
+  
 2. Change all the inputs in initializeDataCSV_RPM_Sweep.py and run
+
   #Name of the propeller (same as step 1)
+  
   name
+  
   #File path to the csv outputted from step 1
+  
   csv_file_path
+  
 3. Change all the inputs in runXROTOR_Case_RPM_Sweep.py and run
+
   #Path to the XROTOR executable (same as step 1)
+
   xrotor_executable
+  
   #Name of the propeller (same as step 1)
+  
   name
+  
   #All of the RPMs to run at in format [###,###,...]  
+  
   rpms
+  
   #Propeller diameter
+  
   diam [meters]
+  
   #Advance ratio to run at (.001 for hover)
+  
   adv_ratio_J
 4. Change all the inputs in getDataXROTOR_RPM_Sweep.py and run
+  
   #Name of the propeller (same as step 1)
+  
   name
+  
   #Path to the folder with all the files outputted from step 3
+  
   folder_path
+  
   #File path to the outputted csv from step 2
+  
   csv_file_path
