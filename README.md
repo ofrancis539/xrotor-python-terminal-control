@@ -3,7 +3,7 @@ Use Python scripts to run simulations in the XROTOR terminal
 
 There are two main modes here: Velocity Sweeps or RPM Sweeps
 
-## Velocity Sweeps:
+# Velocity Sweeps:
 Run a series of velocities at a single rpm to determine Ct and Cp at each velocity/advance ratio
 
 Files Required-
@@ -12,7 +12,7 @@ Files Required-
 * runXROTOR_Case_Vel_Sweep.py
 * getDataXROTOR_Vel_Sweep.py
 
-# Steps-
+## Steps-
 1. Change all the inputs in newPropXROTOR.py and run 
   #Path to the XROTOR executable
 
@@ -90,7 +90,7 @@ Files Required-
 
 
 
-## RPM Sweeps:
+# RPM Sweeps:
 Run a series of RPMs at a single advance ratio (.001 for hover) to determine Ct and Cp at each RPM
 
 Files Required-
@@ -99,7 +99,7 @@ Files Required-
 * runXROTOR_Case_RPM_Sweep.py
 * getDataXROTOR_RPM_Sweep.py
 
-# Steps-
+## Steps-
 1. Change all the inputs in newPropXROTOR.py and run
 
   #Path to the XROTOR executable
