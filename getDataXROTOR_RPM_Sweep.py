@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import re
 
 def extract_part_from_line(file_path, keyword, delimiter, part_index):
     result = []
@@ -11,11 +12,32 @@ def extract_part_from_line(file_path, keyword, delimiter, part_index):
                     result.append(parts[part_index])
 
     return result
-    
+
+def create_dataframe_from_lines(file_path, substring):
+    lines = []
+    found_substring = False
+    with open(file_path, 'r') as file:
+        for line in file:
+            if found_substring:
+                # Replace alphabetical characters with spaces
+                line = re.sub(r'[a-zA-Z]', ' ', line)
+                lines.append(line.strip().split())  # Split the line by spaces
+            elif substring in line:
+                found_substring = True
+                header = line.strip().split()  # Store the header
+                lines.append(header)  # Include the line containing the substring as the header
+
+    # Create DataFrame from the list of lines
+    df = pd.DataFrame(lines[1:], columns=header)  # Skip the header line when creating DataFrame
+    return df
+
+def export_dataframe_to_csv(df, output_csv_path):
+    df.to_csv(output_csv_path, index=False)  # Set index=False to exclude row numbers
+
 
 name = "APC9x6"
 folder_path = 'E:\\Documents\\BU\\Prof Grace Lab\\xrotor\\APC9x6_RPM_Sweep'
-csv_file_path = '%s\\%s_RPM_Sweep_data.csv' % (folder_path,name)
+csv_file_path = '%s\\%s_RPM_Sweep_data.csv' % (folder_path, name)
 
 df = pd.read_csv(csv_file_path)
 
@@ -36,6 +58,7 @@ for ind,file_name in enumerate(files):
 
         rpmExtracted_parts = extract_part_from_line(file_path, rpmKeyword, delimiter, rpmPart_index)
         rpmExtracted_parts = rpmExtracted_parts[0].strip().split(' ')
+        rpm = round(float(rpmExtracted_parts[0]))
 
         JKeyword = 'J'
         delimiter = ':'  # Adjust based on the actual delimiter in your file
@@ -59,9 +82,19 @@ for ind,file_name in enumerate(files):
         CpExtracted_parts = CpExtracted_parts[0].strip().split(' ')
 
         # Print or process the extracted parts
-        new_row = {'Name':name,'RPM':round(float(rpmExtracted_parts[0])),'J':JExtracted_parts[0], 'Ct':CtExtracted_parts[0], 'Cp':CpExtracted_parts[0]}
+        new_row = {'Name':name,'RPM': rpm,'J':JExtracted_parts[0], 'Ct':CtExtracted_parts[0], 'Cp':CpExtracted_parts[0]}
         df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 
-df.to_csv(csv_file_path, index=False)
+        substring = 'r/R'
+        output_csv_path = '%s_%d_Table.csv' %(name, rpm)
 
+        # Create DataFrame
+        table_df = create_dataframe_from_lines(file_path, substring)
+
+        # Export DataFrame to CSV
+        export_dataframe_to_csv(table_df, output_csv_path)
+
+
+# Export DataFrame to CSV
+export_dataframe_to_csv(df, csv_file_path)
 

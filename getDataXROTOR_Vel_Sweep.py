@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import re
 
 def extract_part_from_line(file_path, keyword, delimiter, part_index):
     result = []
@@ -12,9 +13,29 @@ def extract_part_from_line(file_path, keyword, delimiter, part_index):
 
     return result
     
+def create_dataframe_from_lines(file_path, substring):
+    lines = []
+    found_substring = False
+    with open(file_path, 'r') as file:
+        for line in file:
+            if found_substring:
+                # Replace alphabetical characters with spaces
+                line = re.sub(r'[a-zA-Z]', ' ', line)
+                lines.append(line.strip().split())  # Split the line by spaces
+            elif substring in line:
+                found_substring = True
+                header = line.strip().split()  # Store the header
+                lines.append(header)  # Include the line containing the substring as the header
+
+    # Create DataFrame from the list of lines
+    df = pd.DataFrame(lines[1:], columns=header)  # Skip the header line when creating DataFrame
+    return df
+
+def export_dataframe_to_csv(df, output_csv_path):
+    df.to_csv(output_csv_path, index=False)  # Set index=False to exclude row numbers
 
 name = "APC4_2x2"
-folder_path = 'E:\\Documents\\BU\\Prof Grace Lab\\xrotor\\APC4_2x2'
+folder_path = 'E:\\Documents\\BU\\Prof Grace Lab\\xrotor\\APC4_2x2_Vel_Sweep'
 csv_file_path = '%s\\%s_Vel_Sweep_data.csv' % (folder_path,name)
 
 df = pd.read_csv(csv_file_path)
@@ -62,6 +83,19 @@ for ind,file_name in enumerate(files):
         new_row = {'Name':name,'RPM':round(float(rpmExtracted_parts[0])),'J':JExtracted_parts[0], 'Ct':CtExtracted_parts[0], 'Cp':CpExtracted_parts[0]}
         df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 
-df.to_csv(csv_file_path, index=False)
+        substring = 'r/R'
+        output_csv_path = file_path
+        output_csv_path = output_csv_path.replace(folder_path + '\\', '')
+        output_csv_path = output_csv_path.replace('_Vel_Sweep.dat', '')
+        output_csv_path = output_csv_path + '_Table.csv'
+
+        # Create DataFrame
+        table_df = create_dataframe_from_lines(file_path, substring)
+
+        # Export DataFrame to CSV
+        export_dataframe_to_csv(table_df, output_csv_path)
+
+# Export DataFrame to CSV
+export_dataframe_to_csv(df, csv_file_path)
 
 
